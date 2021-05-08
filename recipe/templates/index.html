@@ -1,0 +1,110 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"  href="{%static "css/index.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+<style>
+
+
+</style>
+
+<body style="background-color:whitesmoke;">
+<!-- Main Navbar -->
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light">
+                <a href="#" class="navbar-brand" style="background-color:skyblue;
+                color:#000000;border-width:10px;border-color:skyblue;border-style:solid;border-spacing:30px;border-radius: 5px;">FoodFunda</a>              
+              <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                  <li class="nav-item active"><a class="nav-link" href="{% url 'index' %}" style="background-color:orange"> HOME</a></li>
+                  <li class="nav-item active"><a class="nav-link" href="{% url 'admin:index' %}" style="background-color:orange"> LOGIN</a></li>
+                  <li class="nav-item active"><a class="nav-link" href="{% url 'upload-recipe' %}" style="background-color:orange">UPLOAD</a></li>
+                </ul>
+                <ul class="navbar-nav left">
+                  <a href="https://www.facebook.com" class="fa fa-facebook"></a>
+                  <a href="https://www.youtube.com" class="fa fa-youtube"></a>
+                  <a href="https://www.instagram.com" class="fa fa-instagram"></a>
+                  <a href="https://www.pinterest.com" class="fa fa-pinterest"></a>
+                </ul>
+              </div>
+          </div>
+    </nav>
+</div>
+
+<div>
+  <div class="banner">
+    <div class="cover">
+      <div class="container image">
+          <h2 id="category" style="margin-top: 170px;"><b> Recipe's For Your All Favourite Food...</b></h2>
+      </div>
+    </div>
+  </div>
+</div>
+     
+{% block content %}
+<div class="card-columns" style="margin-top: 2%; padding-left: 10px; padding-right: 10px;">
+    {% for recipe in recipe_gallery %}
+    <div class="card" style="width: 28rem; height: 20rem;">
+      <img class="card-img-top" src="{{ recipe.picture.url }}" style="width: 28rem; height: 20rem;">
+      <div class="card-body" style="width: 28rem; height: 20rem;">
+        <h5 class="card-title">{{ recipe.name }}</h5>
+        <p class="card-text" style="margin-top: 2%; margin-bottom:2%;">{{ recipe.description }}</p>
+        <div class="card-footer bg-transparent border-dark">
+          <center>
+              <a href="update/{{recipe.id}}" class="btn btn-warning" id = '{{recipe.id}}'>Edit</a>
+              <a href="delete/{{recipe.id}}" class="btn btn-danger" id = '{{recipe.id}}'>Delete</a>
+            </center>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+<div>
+    <div class="container" style="margin-bottom: 2%">
+      <h2 style="margin-top: 2%; margin-bottom: 0%"><b>TOP COLLECTION</b></h2>
+      <marquee loop="3">
+      <div class="row">
+          <div class="column">
+              <img src="{%static "images/1.jfif" %}" style="width: 18rem; height: 10rem;">
+          </div>
+          <div class="column">
+              <img src="{%static "images/2.jpg" %}" style="width: 18rem; height: 10rem;">
+          </div>
+          <div class="column">
+                <img src="{%static "images/3.jfif" %}" style="width: 18rem; height: 10rem;">
+            </div>
+          <div class="column">
+            <img src="{%static "images/4.jfif" %}" style="width: 18rem; height: 10rem;">
+          </div>
+      </div>
+    </marquee>
+  </div>
+</div>
+<div>
+    <div class="footer" style="margin: 15px;">
+        <form action=""  autocomplete="off" class="form-horizontal" method="post" style=" text-align: center;">
+          {% csrf_token %}
+            <h2 style="color:red"><b> Subscribe our Newsletter :</b></h2><h3 style="color:Purple"><b> Notified about Our Latest Recipes</b></h2>
+            <div class="input-group" style="width: 50%; margin-left: 25%;">
+              <input name="email" value="" class="form-control email-field" type="text" placeholder="Your Email" style="text-align: center;">
+              <span class="input-group-btn">
+                <button class="btn btn-warning subscribe-btn" type="submit">
+                  SUBSCRIBE
+                </button>
+              </span>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
